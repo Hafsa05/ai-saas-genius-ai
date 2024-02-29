@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { UserButton } from "@clerk/nextjs";
 
 const DashBoardPage = () => {
   return (
     <div>
-      <p className="text-6xl">Hello from Hafsa Mridha</p>
-      <p>(protected)</p>
-      <Button variant="destructive" className="text-indigo-400 " size="lg">Hey there </Button>
+      <p>Dashboard Page (Protected)</p>
+      <UserButton afterSignOutUrl="/" />
     </div>
   );
 }
