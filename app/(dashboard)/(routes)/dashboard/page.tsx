@@ -73,6 +73,7 @@ const DashBoardPage = () => {
       </div>
       <div className="px-4 md:px-20 lg:px-32 space-y-10 ">
         {tools.map((tool) => (
+          // navigate & push is not working so that used Link 
           <Link href={tool.href} key={tool.href}>
             <Card
               key={tool.href}
