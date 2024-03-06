@@ -12,11 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChatCompletionRequestMessage } from "openai";
+// import { ChatCompletionRequestMessage } from "openai";
+import OpenAI from "openai";
 
 const ConversationPage = () => {
   const router = useRouter();
-  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+  const [messages, setMessages] = useState<
+    OpenAI.Chat.CreateChatCompletionRequestMessage[]
+  >([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -29,7 +32,7 @@ const ConversationPage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const userMessage: ChatCompletionRequestMessage = {
+      const userMessage: OpenAI.Chat.CreateChatCompletionRequestMessage = {
         role: "user",
         content: values.prompt,
       };
@@ -44,7 +47,7 @@ const ConversationPage = () => {
 
       form.reset();
     } catch (error: any) {
-      //TODO: open pro model 
+      //TODO: open pro model
       console.log(error);
     } finally {
       router.refresh();
@@ -107,17 +110,32 @@ const ConversationPage = () => {
           </Form>
         </div>
 
-        <div className="space-y-4 mt-4 px-7 text-start">
-        <div className="flex flex-col-reverse gap-y-4">
-          {messages.map((message=>(
-            <div key={message.content}>
-              {message.content}
-            </div>
-          )))}
+        {/* <div className="space-y-4 mt-4 px-7 text-start">
+          <div className="flex flex-col-reverse gap-y-4">
+            {messages.map((message) => (
+              <div key={message.content}>{message.content}</div>
+            ))}
+          </div>
+        </div> */}
 
-        </div>
-         
-          
+        <div className="flex flex-col-reverse gap-y-4">
+          {messages.map((message, index) => (
+            <div key={index}>
+              {
+                typeof message.content === "string" ? (
+                  <div>{message.content}</div>
+                ) : message.content instanceof Array ? (
+                  // Render array of ChatCompletionContentPart
+                  // <div>
+                  //   {message.content.map((part, partIndex) => (
+                  //     <span key={partIndex}>{part.text}</span>
+                  //   ))}
+                  // </div>
+                  <div>{}</div>
+                ) : null /* Handle other content types as needed */
+              }
+            </div>
+          ))}
         </div>
       </div>
     </div>
