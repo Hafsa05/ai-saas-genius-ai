@@ -11,7 +11,6 @@ import {
   VideoIcon,
 } from "lucide-react";
 import Link from "next/link";
-
 import { useRouter } from "next/navigation";
 // import { useRouter } from "next/router";
 
@@ -54,7 +53,7 @@ const tools = [
 ];
 
 const DashBoardPage = () => {
-  const router: any = useRouter;
+  const router = useRouter;
 
   // console.log(router);
   // const handleClick = (event: { href: any }) => {
@@ -73,7 +72,7 @@ const DashBoardPage = () => {
       </div>
       <div className="px-4 md:px-20 lg:px-32 space-y-10 ">
         {tools.map((tool) => (
-          // navigate & push is not working so that used Link 
+          // navigate & push is not working so that used Link
           <Link href={tool.href} key={tool.href}>
             <Card
               key={tool.href}
